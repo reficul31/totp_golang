@@ -7,8 +7,6 @@ import (
 	"crypto/md5"
 	"hash"
 	"encoding/json"
-	"encoding/base32"
-	"encoding/base64"
 	"io/ioutil"
 )
 
@@ -41,17 +39,6 @@ func ReturnHash(algo Algorithm) (func() hash.Hash, error) {
 		return md5.New, nil
 	}
 	return nil, ErrUndefinedAlgorithm
-}
-
-// EncodeToString encodes the string according to the encoding set in AuthOpts
-func EncodeToString(sum []byte, opts AuthOpts) (string, error) {
-	switch opts.Encode {
-	case EncodingBase32:
-		return base32.StdEncoding.EncodeToString(sum)[:opts.Digits], nil
-	case EncodingBase64:
-		return base64.StdEncoding.EncodeToString(sum)[:opts.Digits], nil
-	}
-	return "", ErrUndefinedEncoding
 }
 
 // StringToBytes converts a string to a slice of bytes

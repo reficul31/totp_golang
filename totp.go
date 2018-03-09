@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 	"strings"
-	"crypto/hmac"
+	"math"
 )
 
 // ValidateTOTP validates the expectedTOTP with the generatedTOTP
@@ -23,15 +23,7 @@ func ValidateTOTP(expectedTOTP string, configPath string) (bool, error) {
 
 // GenerateTOTP generates a TOTP based upon the AuthOpts provided
 func GenerateTOTP(opts AuthOpts) (string, error) {
-	counter := time.Now().Second() / opts.Period
-	
-	algo, err := ReturnHash(opts.Algo)
-	if err != nil {
-		return "", err
-	}
-
-	mac := hmac.New(algo, StringToBytes(opts.Secret))
-	mac.Write(StringToBytes(string(counter)))
-
-	return EncodeToString(mac.Sum(nil), opts)
+	t := time.Now()
+	counter := uint64(math.Floor(float64(t.Unix()) / float64(opts.Period)))
+	return GenerateHOTP(opts, counter)
 }
