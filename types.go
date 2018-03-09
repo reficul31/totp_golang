@@ -1,4 +1,4 @@
-package main
+package totp
 
 // Algorithm defines the Algorithm used for TOTP generation
 type Algorithm int
