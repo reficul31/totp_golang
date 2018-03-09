@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	opts, err := PopulateAuthOpts()
+	opts, err := PopulateAuthOpts("config.json")
 	if err != nil {
 		panic(err)
 	}

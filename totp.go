@@ -7,8 +7,8 @@ import (
 )
 
 // ValidateTOTP validates the expectedTOTP with the generatedTOTP
-func ValidateTOTP(expectedTOTP string) (bool, error) {
-	opts, err := PopulateAuthOpts()
+func ValidateTOTP(expectedTOTP string, configPath string) (bool, error) {
+	opts, err := PopulateAuthOpts(configPath)
 	if err != nil {
 		return false, err 
 	}

@@ -13,10 +13,10 @@ import (
 )
 
 // PopulateAuthOpts populates the AuthOpts struct with the data from config.json
-func PopulateAuthOpts() (AuthOpts, error) {
+func PopulateAuthOpts(configPath string) (AuthOpts, error) {
 	opts := AuthOpts{}
 
-	configFile, err := ioutil.ReadFile("config.json")
+	configFile, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		return opts, err
 	}
