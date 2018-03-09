@@ -8,17 +8,11 @@ import (
 	"fmt"
 )
 
-func ValidateHOTP(expectedHOTP string, counter uint64, configPath string) (bool, error) {
-	opts, err := PopulateAuthOpts(configPath)
-	if err != nil {
-		return false, err 
-	}
-
+func ValidateHOTP(expectedHOTP string, counter uint64, opts AuthOpts) (bool, error) {
 	generatedHOTP, err := GenerateHOTP(opts, counter)
 	if err != nil {
 		return false, err
 	}
-
 	return strings.Compare(expectedHOTP, generatedHOTP) == 0, nil
 }
 

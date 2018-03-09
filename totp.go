@@ -7,17 +7,11 @@ import (
 )
 
 // ValidateTOTP validates the expectedTOTP with the generatedTOTP
-func ValidateTOTP(expectedTOTP string, configPath string) (bool, error) {
-	opts, err := PopulateAuthOpts(configPath)
-	if err != nil {
-		return false, err 
-	}
-
+func ValidateTOTP(expectedTOTP string, opts AuthOpts) (bool, error) {
 	generatedTOTP, err := GenerateTOTP(opts)
 	if err != nil {
 		return false, err
 	}
-
 	return strings.Compare(expectedTOTP, generatedTOTP) == 0, nil
 }
 
