@@ -8,6 +8,7 @@ import (
 	"fmt"
 )
 
+// ValidateHOTP is a wrapper around the HOTP validation operations
 func ValidateHOTP(expectedHOTP string, counter uint64, opts AuthOpts) (bool, error) {
 	generatedHOTP, err := GenerateHOTP(opts, counter)
 	if err != nil {
@@ -16,6 +17,7 @@ func ValidateHOTP(expectedHOTP string, counter uint64, opts AuthOpts) (bool, err
 	return strings.Compare(expectedHOTP, generatedHOTP) == 0, nil
 }
 
+// GenerateHOTP function generates the HOTP based on the AuthOpts
 func GenerateHOTP(opts AuthOpts, counter uint64) (string, error) {
 	algo, err := ReturnHash(opts.Algo)
 	if err != nil {
