@@ -1,9 +1,9 @@
 package totp
 
 import (
-	"time"
-	"strings"
+	"crypto/subtle"
 	"math"
+	"time"
 )
 
 // ValidateTOTP validates the expectedTOTP with the generatedTOTP
@@ -12,7 +12,7 @@ func ValidateTOTP(expectedTOTP string, opts AuthOpts) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return strings.Compare(expectedTOTP, generatedTOTP) == 0, nil
+	return subtle.ConstantTimeCompare([]byte(expectedTOTP), []byte(generatedTOTP)) == 1, nil
 }
 
 // GenerateTOTP generates a TOTP based upon the AuthOpts provided
